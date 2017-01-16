@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>add new textbox</title>
+	<link rel="stylesheet" href="">
+</head>
+<body>
+	<h3>add new textbox</h3>
+	<div>
+		<label>
+			<input type="checkbox" addnewtextbox checked="true" /><span>Text 1</span>
+		</label>
+		<label>
+			<input type="checkbox" /><span>Text 2</span>
+		</label>
+		<label>
+			<input type="checkbox" /><span>Text 3</span>
+		</label>
+		<label>
+			<input type="checkbox" addnewtextbox checked="true" /><span>Text 4</span>
+		</label>
+		<label>
+			<input type="checkbox" /><span>Text 5</span>
+		</label>
+
+	</div>
+	
+	<script src="../jquerylibrary/jquery-3.1.1.min.js"></script>
+	<script>
+	$.fn.addNewTextbox = function(options) {
+	    var defaults = {
+	        selector: 'addnewtextbox',
+	        autoCheck: false
+	    }
+	    
+	    var inputTypeTextbox = '<input type="text" class="newTextBox"/>'
+
+	    function addBox(options) {
+	    	var settings = $.extend({}, defaults, options)
+	        var checkStatus;
+	        if (settings.autoCheck) {
+	            $('[addnewtextbox]').each(function() {
+	                checkStatus = $(this).is(':checked');
+	                addTextbox(checkStatus, $(this))
+	            })
+
+	        } else {
+	            checkStatus = ('[addnewtextbox]', $(this)).is(":checked");
+	            addTextbox(checkStatus, $(this))
+	        }
+	    }
+
+	    function addTextbox(checkStatus, $this) {
+	        if (checkStatus) {
+	            $this.siblings().after(inputTypeTextbox)
+	        } else {
+	            $this.siblings('.newTextBox').remove();
+	        }
+	    }
+
+	    function bindEvents() {
+	        $('body').on('change', '[addnewtextbox]', addBox);
+	    }
+	    //addTextbox();
+	    addBox({
+	        autoCheck: true
+	    });
+	    bindEvents();
+
+	};
+
+	$('[addnewtextbox]').addNewTextbox();
+
+	</script>
+</body>
+</html>
